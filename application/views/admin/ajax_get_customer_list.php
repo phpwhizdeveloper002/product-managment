@@ -14,8 +14,7 @@ foreach($category_data as $category) { ?>
         </span>
     </td>
    <td class="align-middle text-center text-sm">
-       <button class="btn btn-warning">edit</button>
-       <button class="btn btn-danger">delete</button>
+        <button class="btn btn-warning" onclick="editCategory(<?php echo $category['id']; ?>)">Edit</button>
    </td>
 </tr>
 <?php } }else{ ?>

@@ -65,6 +65,52 @@ class Category extends CI_Controller {
             }
         }
     }
+
+    public function updateCategoryPopup() {
+        $categoryId = $this->input->post('id');
+
+        if(!empty($categoryId)) {
+            $this->db->where('id', $categoryId);
+            $data['categoryData'] = $this->db->get('categories')->row_array();
+        }
+        
+        echo $this->load->view('admin/models/update_category_popup', $data, true);
+    }   
+
+    public function updateCategoryForm() {
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('name', 'Category Name', 'required|trim');
+
+        if ($this->form_validation->run() == FALSE) {
+            $errors = validation_errors();
+    
+            $this->session->set_flashdata('error_message', $errors);
+    
+            echo json_encode(['errors' => true]);
+            return;
+        }
+    
+        $formData = $this->input->post();
+        
+        if(!empty($formData)){
+
+            $updateData = [
+                'name' => $this->input->post('name'),
+                'status' => 1,
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            $inserted = $this->db->update('categories', $updateData, ['id' => $formData['categoryId']]);
+        
+            if ($inserted) {
+                echo json_encode(['message' => 'Form Update successfully!']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Failed to submit form!']);
+            }
+        }
+    }
     
 }
 ?>
