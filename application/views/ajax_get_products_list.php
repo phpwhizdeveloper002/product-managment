@@ -14,7 +14,7 @@
                     <p class="card-text">Price : <?php echo $product['price']; ?></p>
                     <a href="<?php echo base_url('Frontend/product_buy/' . $product['id']); ?>" target="_blank" class="btn btn-warning btn-md">Order Now</a>
                     <?php if($product['is_wishlist'] == 1) { ?> 
-                    <a href="<?php echo base_url('Frontend/add_to_cart/' . $product['id']); ?>" target="_blank" class="btn btn-info btn-md">Add to cart</a>
+                    <a href="<?php echo base_url('Frontend/add_to_cart/' . $product['id']); ?>" class="btn btn-info btn-md">Add to cart</a>
                     <?php } ?>
                 </div>
         </div>

@@ -26,7 +26,18 @@
             <li class="list-group-item"><?php echo $productData['title']; ?></li>
             <li class="list-group-item"><?php echo $productData['description']; ?></li>
             <li class="list-group-item"><?php echo $productData['price']; ?></li>
+            <li class="list-group-item">Available quantity : <?php echo $productData['qty']; ?></li>
         </ul>
+
+        <div class="card-body">
+            <label for="qty">Quantity:</label>
+            <select id="qty" name="qty" class="form-select mb-2" style="width: auto; display: inline-block;">
+                <?php for ($i = 1; $i <= 10; $i++): ?>
+                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>
+
         <div class="card-body">
             <button class="card-link btn btn-primary" onclick="butProduct(<?php echo $productData['id']; ?>)">Buy Now</button>
         </div>
@@ -36,13 +47,25 @@
 
     <script>
         function butProduct(id) {
-           
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Product bought successfully!',
-                confirmButtonText: 'OK'
-            });
+            var qty = document.getElementById('qty').value;
+            var availableQty = <?php echo (int) $productData['qty']; ?>;
+
+            if (qty > availableQty) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Quantity Exceeded',
+                    text: 'Please select a quantity less than or equal to the available stock.',
+                    confirmButtonText: 'OK'
+                });
+                return; // Prevent further execution if needed
+            }else{
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Product bought successfully!',
+                    confirmButtonText: 'OK'
+                });
+            }            
 
             console.log("Product ID:", id);
         }
