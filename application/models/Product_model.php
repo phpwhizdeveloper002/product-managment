@@ -11,7 +11,6 @@ class Product_model extends CI_Model {
         $this->db->select($field, false);
         $this->db->from($table_name);
 
-        // Add JOINs if provided
         if (!empty($join) && is_array($join)) {
             foreach ($join as $j) {
                 // $j = ['table' => 'category', 'condition' => 'category.id = products.category_id', 'type' => 'left']
@@ -22,7 +21,6 @@ class Product_model extends CI_Model {
 
         $this->db->order_by('id', 'DESC');
 
-        // Where conditions
         if (!empty($where)) {
             if (is_array($where)) {
                 foreach ($where as $key => $val) {
