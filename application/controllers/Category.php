@@ -68,7 +68,7 @@ class Category extends CI_Controller {
 
     public function updateCategoryPopup() {
         $categoryId = $this->input->post('id');
-
+        
         if(!empty($categoryId)) {
             $this->db->where('id', $categoryId);
             $data['categoryData'] = $this->db->get('categories')->row_array();

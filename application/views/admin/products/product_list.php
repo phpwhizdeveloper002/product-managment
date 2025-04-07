@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page"><?php echo $category; ?></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page"><?php echo $product; ?></li>
           </ol>
         </nav>
       </div>
@@ -28,13 +28,13 @@
     <div class="container-fluid py-2">
       <div class="row">
         <div class="ms-3">
-          <h3 class="mb-0 h4 font-weight-bolder"><?php echo $category; ?></h3>
+          <h3 class="mb-0 h4 font-weight-bolder"><?php echo $product; ?></h3>
           <p class="mb-4">
 
           </p>
         </div>
         <div class="text-right">
-          <button class="btn btn-primary" onclick="addNewCategoryPopup();">Add Category</button>
+          <button class="btn btn-primary" onclick="addNewproductPopup();">Add product</button>
         </div>
         <div>
         <div class="row">
@@ -42,16 +42,20 @@
               <div class="card my-4">
                 <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                   <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
-                    <h6 class="text-white text-capitalize ps-3"><?php echo $category; ?></h6>
+                    <h6 class="text-white text-capitalize ps-3"><?php echo $product; ?></h6>
                   </div>
                 </div>
                 <div class="card-body px-0 pb-2">
                   <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0" id="category_table">
+                    <table class="table align-items-center mb-0" id="product_table">
                         <thead>
                           <tr>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">#No</th>
-                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+                              <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Title</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Category Name</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Quantity</th>
+                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Description</th>
                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
                             <th class="text-secondary opacity-7"></th>
                           </tr>
@@ -105,11 +109,11 @@
 <script>
     $(document).ready(function() {
         $.ajax({
-            url: "<?= base_url('Category/ajax_get_category_list'); ?>",
+            url: "<?= base_url('Product/ajax_get_product_list'); ?>",
             type: 'GET',
             dataType: 'html', 
             success: function(response) {
-                let tableBody = $('#category_table tbody');
+                let tableBody = $('#product_table tbody');
                 tableBody.empty();
 
                 if (response.trim()) {
@@ -122,16 +126,17 @@
         });
     });
 
-    function addNewCategoryPopup() {
-      $.ajax({
-            url: "<?= base_url('Category/addNewCategoryPopup'); ?>",
+    function addNewproductPopup() {
+        $.ajax({
+            url: "<?= base_url('Product/addNewProductPopup'); ?>",
             type: 'POST',
             dataType: "html",
             data: {
                 '<?= $this->security->get_csrf_token_name(); ?>': '<?= $this->security->get_csrf_hash(); ?>' 
             },
             cache: false,
-            success: function(response) {           
+            success: function(response) {  
+                       
                 $("#addNewClinicPopup").html(response);
 
                 $('#addNewClinicPopup').modal({
@@ -139,28 +144,6 @@
                     keyboard: false
                 }).modal('show');
             }
-      });
-    }
-
-    function editCategory(id) {
-
-      $.ajax({
-            url: "<?= base_url('Category/updateCategoryPopup'); ?>",
-            type: 'POST',
-            dataType: "html",
-            data: {
-              id : id,
-              '<?= $this->security->get_csrf_token_name(); ?>': '<?= $this->security->get_csrf_hash(); ?>' 
-            },
-            cache: false,
-            success: function(response) {           
-                $("#addNewClinicPopup").html(response);
-
-                $('#addNewClinicPopup').modal({
-                    backdrop: 'static',
-                    keyboard: false
-                }).modal('show');
-            }
-      });
+        });
     }
 </script>

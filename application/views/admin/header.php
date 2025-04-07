@@ -48,6 +48,12 @@
             <span class="nav-link-text ms-1">Categories</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link active bg-gradient-dark text-white" href="<?=base_url();?>/Product/index">
+            <i class="material-symbols-rounded opacity-5">table_view</i>
+            <span class="nav-link-text ms-1">Products</span>
+          </a>
+        </li>
       </ul>
     </div>
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">

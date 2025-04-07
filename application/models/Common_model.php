@@ -11,6 +11,7 @@ class Common_model extends CI_Model {
         
 		$this->db->select($field, false);
 		$this->db->from($table_name);
+		$this->db->order_by('id', 'DESC'); 
 
 		if (!empty($where)) {
 			if (is_array($where)) {
