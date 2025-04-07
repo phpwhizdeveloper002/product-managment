@@ -2,8 +2,8 @@
 <body>
 <div class="container">
     <h2><?php echo $products; ?></h2>
-    <a href="<?php echo base_url('Frontend/showWhishListData'); ?>" target="_blank" class="btn btn-success btn-md">Show whishlist products</a>
-    
+    <a href="<?php echo base_url('Frontend/showWhishListData'); ?>" target="_blank" class="btn btn-success btn-md">whishlist products</a>
+    <p class="btn btn-danger"><?php echo $add_to_cart_products_count; ?></p>
     <h3><i class='fas fa-baby-carriage' style='font-size:24px'></i></h3>
     <div class="form-group">
         <label for="category">Select Category:</label>

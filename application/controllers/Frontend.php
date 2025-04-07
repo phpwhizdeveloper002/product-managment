@@ -15,6 +15,10 @@ class Frontend extends CI_Controller {
 	{
 		$data['products'] = "Products";
 
+		$where = ['is_wishlist' => 0];
+		$query = $this->Common_model->get_record('products', $where);
+		$data['add_to_cart_products_count'] = count($query->result_array());
+		
 		$query = $this->Common_model->get_record('categories');
         $data['categories'] = $query->result_array();
 

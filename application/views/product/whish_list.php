@@ -27,26 +27,51 @@
             <li class="list-group-item"><?php echo $product['title']; ?></li>
             <li class="list-group-item"><?php echo $product['description']; ?></li>
             <li class="list-group-item"><?php echo $product['price']; ?></li>
+            <li class="list-group-item">Available quantity : <?php echo $product['qty']; ?></li>
         </ul>
         <div class="card-body">
-            <button class="card-link btn btn-primary m-3" onclick="butProduct(<?php echo $product['id']; ?>)">Buy Now</button>
+            <label for="qty">Quantity:</label>
+            <select id="qty_<?php echo $product['qty']; ?>" name="qty" class="form-select mb-2" style="width: auto; display: inline-block;">
+                <?php for ($i = 1; $i <= 10; $i++): ?>
+                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                <?php endfor; ?>
+            </select>
+        </div>
+
+        <div class="card-body">
+            <button class="card-link btn btn-primary m-3" onclick="butProduct(<?php echo $product['id']; ?>, <?php echo $product['qty']; ?>)">Buy Now</button>
             <?php if($product['is_wishlist'] == 0) { ?> 
                 <a href="<?php echo base_url('Frontend/remove_add_to_cart/' . $product['id']); ?>" target="_blank" class="btn btn-warning btn-md">Remove From Whishlist</a>
             <?php } ?>
         </div>
         </div>
-        <?php } }?>
+        <?php } }else{ ?>
+            <h1>Empty Whish List.....</h1>
+        <?php } ?>
     </div>
 
     <script>
-        function butProduct(id) {
-           
-            Swal.fire({
-                icon: 'success',
-                title: 'Success!',
-                text: 'Product bought successfully!',
-                confirmButtonText: 'OK'
-            });
+        function butProduct(id, qty) {
+            var qtyElement = document.getElementById('qty_' + id);
+            var qty = parseInt(qtyElement.value);
+            var availableQty = qty;
+            alert(qty);
+            if (qty > availableQty) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Quantity Exceeded',
+                    text: 'Please select a quantity less than or equal to the available stock.',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }else{
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: 'Product bought successfully!',
+                    confirmButtonText: 'OK'
+                });
+            }            
 
             console.log("Product ID:", id);
         }
