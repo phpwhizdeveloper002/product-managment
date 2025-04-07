@@ -70,8 +70,9 @@ class Category extends CI_Controller {
         $categoryId = $this->input->post('id');
         
         if(!empty($categoryId)) {
-            $this->db->where('id', $categoryId);
-            $data['categoryData'] = $this->db->get('categories')->row_array();
+
+            $where = array('id' => $categoryId);
+            $data['categoryData'] = $this->Common_model->get_data('categories', $where);
         }
         
         echo $this->load->view('admin/models/update_category_popup', $data, true);

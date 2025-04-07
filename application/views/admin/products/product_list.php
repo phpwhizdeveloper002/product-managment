@@ -146,4 +146,26 @@
             }
         });
     }
+
+    function updateProductPopup(id) {
+        
+        $.ajax({
+            url: "<?= base_url('Product/updateProductPopup'); ?>",
+            type: 'POST',
+            dataType: "html",
+            data: {
+                id : id,
+                '<?= $this->security->get_csrf_token_name(); ?>': '<?= $this->security->get_csrf_hash(); ?>' 
+            },
+            cache: false,
+            success: function(response) {           
+                $("#addNewClinicPopup").html(response);
+
+                $('#addNewClinicPopup').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                }).modal('show');
+            }
+        });
+    }
 </script>

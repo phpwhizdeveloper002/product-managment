@@ -38,5 +38,22 @@ class Common_model extends CI_Model {
 
         return false;
     }
+
+	public function update_data($table, $where, $data) {
+		if (!empty($data) && is_array($data)) {
+			$this->db->where($where);
+			return $this->db->update($table, $data);
+		}
+		return false;
+	}
+
+	public function get_data($table, $where = array()) {
+		if (!empty($where)) {
+			$this->db->where($where);
+		}
+		$query = $this->db->get($table);
+		return $query->row_array(); // returns a single record as an associative array
+	}
+	
 }
 ?>

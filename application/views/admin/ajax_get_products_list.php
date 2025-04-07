@@ -23,7 +23,7 @@ foreach($product_data as $product) { ?>
         <p class="text-xs font-weight-bold mb-0"><?php echo $product['description']; ?></p>
     </td>
     <td class="align-middle text-center text-sm">
-            <button class="btn btn-warning" onclick="editproduct(<?php echo $product['id']; ?>)">Edit</button>
+            <button class="btn btn-warning" onclick="updateProductPopup(<?php echo $product['id']; ?>)">Edit</button>
     </td>
 </tr>
 <?php } }else{ ?>

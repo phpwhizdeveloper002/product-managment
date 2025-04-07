@@ -37,10 +37,26 @@ class Product extends CI_Controller {
     }
 
     public function addNewProductPopup() {
-        $data['product'] = "Product";
+        $data['product'] = "Add Product";
 
         $query = $this->Common_model->get_record('categories');
-        $data['category_data'] = $query->result_array();
+        $data['categories'] = $query->result_array();
+        
+        echo $this->load->view('admin/models/add_new_product_popup', $data, true);
+    }
+
+    public function updateProductPopup() {
+        $data['product'] = "Update Product";
+
+        $productId = $this->input->post('id');
+
+        if(!empty($productId)) {
+            $this->db->where('id', $productId);
+            $data['productData'] = $this->db->get('products')->row_array();
+        }
+
+        $query = $this->Common_model->get_record('categories');
+        $data['categories'] = $query->result_array();
         
         echo $this->load->view('admin/models/add_new_product_popup', $data, true);
     }
@@ -64,7 +80,8 @@ class Product extends CI_Controller {
             return;
         }
     
-        $formData = $this->input->post();
+        $data = $this->input->post();
+        $product_id = $data['product_id'];
 
         if (!empty($_FILES['image']['name'])) {
 
@@ -76,19 +93,39 @@ class Product extends CI_Controller {
     
             if ($this->upload->do_upload('image')) {
                 $uploadData = $this->upload->data();
-                $formData['image'] = $uploadData['file_name'];
+                if(!empty($uploadData)){
+                    $data['image'] = $uploadData['file_name'];
+                }else{
+                    $data['image'] = $this->input->post('old_image');
+                }
             } else {
                 $error = $this->upload->display_errors();
                 echo json_encode(['status' => false, 'message' => $error]);
                 return;
             }
         }
+
+        $formData = [
+            'category_id' => $data['category_id'],
+            'title' => $data['title'],
+            'status' => 1,
+            'image' => $data['image'],
+            'price' => $data['price'],
+            'qty' => $data['qty'],
+            'description' => $data['description'],
+        ];
     
         if (!empty($formData)) {
             $formData['created_at'] = date('Y-m-d H:i:s');
             $formData['status'] = 1;
-    
-            $inserted = $this->Common_model->insert_data('products', $formData);
+            
+            if(!empty($product_id)){
+                
+                $where = array('id' => $product_id);
+                $inserted = $this->Common_model->update_data('products', $where, $formData);
+            }else{
+                $inserted = $this->Common_model->insert_data('products', $formData);
+            }
     
             if ($inserted) {
                 echo json_encode(['status' => true, 'message' => 'Form submitted successfully!']);
