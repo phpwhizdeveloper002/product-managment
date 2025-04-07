@@ -44,8 +44,8 @@
             <div class="card-header p-2 ps-3">
               <div class="d-flex justify-content-between">
                 <div>
-                  <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-                  <h4 class="mb-0">2</h4>
+                  <p class="text-sm mb-0 text-capitalize">Products</p>
+                  <h4 class="mb-0"><?php echo $product_count; ?></h4>
                 </div>
                 <div class="icon icon-md icon-shape bg-gradient-dark shadow-dark shadow text-center border-radius-lg">
                   <i class="material-symbols-rounded opacity-10">person</i>

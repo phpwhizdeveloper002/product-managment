@@ -14,8 +14,10 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$query = $this->Common_model->get_record('categories');
-
         $data['category_count'] = count($query->result_array());
+
+		$prdQuery = $this->Common_model->get_record('products');
+        $data['product_count'] = count($prdQuery->result_array());
 
         $this->load->view('admin/header');
 		$this->load->view('admin/dashboard', $data);
